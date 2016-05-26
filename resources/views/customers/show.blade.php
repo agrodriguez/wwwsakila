@@ -6,15 +6,12 @@
 	<hr/>
 
 	<h2>Balance : {{ $customer->getBalance() }}</h2>
-	@foreach( $customer->rentals->where('return_date',null) as $rental)
-		{{ $rental->inventory->film->title }}, 
-		<a href="{{ url('rentals/'.$rental->rental_id.'/payment') }}" title="New Film" alt="New Film" class="btn btn-primary">
-			Return Rental
-		</a>
-	@endforeach
+	<div class="row">
+		
+	</div>
 
 	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
+		<div class="col-md-5 col-md-offset-0">
 			<ul class="list-group">
 				<li class="list-group-item"><b>Fist name:</b> {{ $customer->first_name }}</li>
 				<li class="list-group-item"><b>Last name:</b> {{ $customer->last_name }}</li>
@@ -22,7 +19,19 @@
 				<li class="list-group-item"><b>Active:</b> <span class="glyphicon glyphicon-{{ $customer->active? 'ok': 'remove' }}" aria-hidden="true"></span></li>
 			</ul>
 		</div>
+		<div class="col-md-4 ">
+			<p>Rentals</p>
+			<ul class="list-group">
+				@foreach( $customer->rentals->where('return_date',null) as $rental)
+					<li class="list-group-item">{{ $rental->inventory->film->title }} 
+					<a href="{{ url('rentals/'.$rental->rental_id) }}" title="New Film" alt="New Film" class="btn btn-primary btn-xs pull-right">
+						Return Rental
+					</a></li>
+				@endforeach
+			</ul>
+		</div>
 	</div>
+	<hr />
 	<div class="row">
 		<div class="col-md-5 col-md-offset-0 ">
 			<ul class="list-group">
@@ -32,10 +41,8 @@
 				<li class="list-group-item"><b>City:</b> {{ $customer->address->getCity() }}</li>
 				<li class="list-group-item"><b>Country:</b> {{ $customer->address->getCountry() }}</li>
 				<li class="list-group-item"><b>Postal code:</b> {{ $customer->address->postal_code }}</li>
-				<li class="list-group-item"><b>Phone:</b> {{ $customer->address->phone }}</li>
-				
+				<li class="list-group-item"><b>Phone:</b> {{ $customer->address->phone }}</li>				
 			</ul>
-
 		</div>
 		<div class="col-md-7 ">
 			<div class="col-sm-2"><b>Location:</b></div>

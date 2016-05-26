@@ -4,19 +4,43 @@
 
 	<hr/>
 
+	{!! Form::open(['action'=>['RentalsController@update',$rental->rental_id],'method'=>'PATCH','class'=>'form-horizontal']) !!}
+		
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+
+				
+				
+
+				{!! Form::hidden('store_id',Auth::user()->store_id ,['id'=>'store_id']) !!}
+				{!! Form::hidden('staff_id',Auth::user()->staff_id ,['id'=>'staff_id']) !!}
+
+
+			</div>
+			
+
+		</div>
+		<hr />
+		<div class="row">
+			<div class="form-group">
+				<div class="col-sm-offset-4 col-sm-4">
+					{!! Form::submit('Return Rental',['class'=>'btn btn-primary form-control']) !!}			
+				</div>
+			</div>
+		</div>
+
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-4 col-md-offset-4">
 			<ul class="list-group">
 				<li class="list-group-item">{{ $rental->rental_id }}</li>
 				<li class="list-group-item">{{ $rental->customer_id }}</li>
-				<li class="list-group-item">{{ $rental->customer->first_name }}</li>
+				<li class="list-group-item">{{ $rental->customer->getFullName() }}</li>
 			</ul>
 		</div>
 	</div>
+	
 
-	<a href="{{ url('rentals/'.$rental->rental_id.'/payment') }}" title="New Film" alt="New Film" class="btn btn-primary">
-		Return Rental
-	</a>
+	
 @stop
 
 

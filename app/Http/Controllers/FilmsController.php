@@ -44,6 +44,7 @@ class FilmsController extends Controller
     public function show(Film $film)
     {
         $inventory_list = $this->getInventory($film, \Auth::user()->store_id);
+
         return view('films.show', compact('film','inventory_list'));
     }
 
@@ -125,12 +126,6 @@ class FilmsController extends Controller
      **/
     private function getInventory(Film $film, $store_id)
     {
-        /*$queryString='SELECT inventory_id
-        FROM inventory
-        WHERE film_id = '.$film->film_id.'
-        AND store_id = '.$store_id.'
-        AND inventory_in_stock(inventory_id);';
-        */
         $queryString='call film_in_stock('.$film->film_id.','.$store_id.',@i); ';
         return \DB::select($queryString);
     }

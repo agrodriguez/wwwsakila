@@ -23,6 +23,7 @@ Route::get('api/inventories','PagesController@inventories');
 /**
  * spoof route to add inventory
  */
+
 Route::post('inventories', 'PagesController@storeInventory');
 
 Route::resource('films','FilmsController',['parameters'=>['films'=>'film']]);
@@ -32,16 +33,9 @@ Route::resource('staffs','StaffsController',['parameters'=>['staffs'=>'staff']])
 // delete this route not used Route::resource('addresses','AddressesController',['parameters'=>['addresses'=>'address']]);
 Route::resource('rentals','RentalsController',['parameters'=>['rentals'=>'rental'],'except' => ['create','destroy']]);
 
-Route::get('rentals/{rental}/payment','RentalsController@payment');
-Route::post('rentals/{rental}/payment','RentalsController@payUp');
+Route::get('rentals/{rental}/payment',['as'=>'rentals.payment','uses'=>'RentalsController@payment']);
+Route::post('rentals/{rental}/payment',['as'=>'rentals.payUp','uses'=>'RentalsController@payUp']);
 
-Route::get('rentals/{rental}/return','RentalsController@returnDVD');
-Route::post('rentals/{rental}/return','RentalsController@ret');
-
-
-// route rental/{rental}/payment
-// route rental/{rental}/return
-// route rental/{rental}
 
 Route::auth();
 
