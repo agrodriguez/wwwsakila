@@ -61,13 +61,31 @@
 					</div>
 				</div>
 
-				{{-- <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+				<div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
 					{!! Form::label('username','User Name:',['class'=>'col-sm-2 control-label']) !!}
 					<div class="col-sm-10">
 						{!! Form::text('username',null,['class'=>'form-control']) !!}
 						<small class="text-danger">{{ $errors->first('username') }}</small>
 					</div>
-				</div> --}}
+				</div>
+
+				<div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+					{!! Form::label('password','Password:',['class'=>'col-sm-2 control-label']) !!}
+					<div class="col-sm-10">
+						{!! Form::password('password',null,['class'=>'form-control']) !!}
+						<small class="text-danger">{{ $errors->first('password') }}</small>
+					</div>
+				</div>
+
+				<div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+					{!! Form::label('password_confirmation','Password confirmation:',['class'=>'col-sm-2 control-label']) !!}
+					<div class="col-sm-10">
+						{!! Form::password('password_confirmation',null,['class'=>'form-control']) !!}
+						<small class="text-danger">{{ $errors->first('password_confirmation') }}</small>
+					</div>
+				</div>
+
+				
 
 			</div>
 		</div>
@@ -144,13 +162,7 @@
 			</div>
 		</div>
 
-		{{-- <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-			{!! Form::label('password','Password:',['class'=>'col-sm-2']) !!}
-			<div class="col-sm-10">
-				{!! Form::password('password',null,['class'=>'form-control']) !!}
-				<small class="text-danger">{{ $errors->first('password') }}</small>
-			</div>
-		</div> --}}
+		
 
 		<hr />
 		<div class="row">

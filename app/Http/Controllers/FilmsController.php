@@ -103,6 +103,18 @@ class FilmsController extends Controller
     }
 
     /**
+     * undocumented function
+     *
+     * @return void
+     * @author 
+     **/
+    public function destroy(Film $film)
+    {
+        $film->delete();
+        return redirect('films');
+    }
+
+    /**
      * update the edited film
      *
      * parameter Film $film 

@@ -64,6 +64,7 @@ class StaffsController extends Controller
 
         // set the customer values        
         $staff_array = array_add(array_add($request->except('address','city_id','country_id','location'), 'address_id', $address->address_id),'active',$request->has('active'));
+        $staff_array['password'] = bcrypt($request['password']);
         $staff =Staff::create($staff_array);
 
         $tmpName='images/uploads/upload'.time().'.png';
@@ -100,6 +101,8 @@ class StaffsController extends Controller
 
         //$tmpName='C:\inetpub\wwwsakila\public\Jqueryupload\uploads\Desktop.png';
 
+
+
         $tmpName='images/uploads/upload'.time().'.png';
 
         /*$img = Image::make($tmpName)->resize(121, null,function ($constraint) {
@@ -117,12 +120,27 @@ class StaffsController extends Controller
         $staff->address->update($address_array);
 
         $staff->active = $request->has('active');
-        $staff->update($request->except('address','city_id','country_id','location','picture','password'));
-
-
-
+        if($request->has('password')){
+            $request['password'] = bcrypt($request['password']);
+            $staff->update($request->except('address','city_id','country_id','location','picture'));
+        }
+        else{
+            $staff->update($request->except('address','city_id','country_id','location','picture','password'));   
+        }
         //$staff->update($request->except(['picture','password']));
 
+        return redirect('staffs');
+    }
+
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author 
+     **/
+    public function destroy(Staff $staff)
+    {
+        $staff->delete();
         return redirect('staffs');
     }
 

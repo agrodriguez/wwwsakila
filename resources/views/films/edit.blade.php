@@ -10,6 +10,18 @@
 
 	{!! Form::close() !!}
 
+	{{-- {!! Form::model($film,['action'=>['FilmsController@destroy',$film->film_id],'method'=>'DELETE','class'=>'form-horizontal']) !!}
+		
+		<div class="row">
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					{!! Form::submit('Delete',['class'=>'btn btn-primary form-control']) !!}			
+				</div>
+			</div>
+		</div>
+
+	{!! Form::close() !!} --}}
+
 	@include('errors.list')
 
 @stop
