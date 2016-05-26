@@ -1,0 +1,10 @@
+/vendor
+/node_modules
+/public/storage
+/wwwsakila
+wwwsakila.rar
+Homestead.yaml
+Homestead.json
+.env
+wwwsakila.sublime-project
+wwwsakila.sublime-workspace
