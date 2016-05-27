@@ -17,25 +17,29 @@ Route::get('/home','PagesController@index');
 Route::get('about','PagesController@about');
 Route::get('contact','PagesController@contact');
 
-Route::get('api/cities','PagesController@cities');
-Route::get('api/inventories','PagesController@inventories');
+Route::get('api/cities','ApiController@cities');
+Route::get('api/inventories','ApiController@inventories');
 
-/**
- * spoof route to add inventory
- */
-
-Route::post('inventories', 'PagesController@storeInventory');
+/** spoof route to add inventory */
+Route::post('inventories', 'ApiController@storeInventory');
 
 Route::resource('films','FilmsController',['parameters'=>['films'=>'film']]);
-Route::resource('actors','ActorsController',['parameters'=>['actors'=>'actor']]);
+Route::resource('actors','ActorsController',['parameters'=>['actors'=>'actor'],'except' => ['create','destroy','update','edit']]);
 Route::resource('customers','CustomersController',['parameters'=>['customers'=>'customer']]);
 Route::resource('staffs','StaffsController',['parameters'=>['staffs'=>'staff']]);
-// delete this route not used Route::resource('addresses','AddressesController',['parameters'=>['addresses'=>'address']]);
-Route::resource('rentals','RentalsController',['parameters'=>['rentals'=>'rental'],'except' => ['create','destroy']]);
+Route::resource('rentals','RentalsController',['parameters'=>['rentals'=>'rental'],'except' => ['create','destroy','edit']]);
+/** delete this route not used Route::resource('addresses','AddressesController',['parameters'=>['addresses'=>'address']]); */
+
+/** * custom routes for rental payment */
 
 Route::get('rentals/{rental}/payment',['as'=>'rentals.payment','uses'=>'RentalsController@payment']);
 Route::post('rentals/{rental}/payment',['as'=>'rentals.payUp','uses'=>'RentalsController@payUp']);
 
+/** * custom routes for login, not using register route Route::auth();*/
 
-Route::auth();
+route::get('login','Auth\AuthController@showLoginForm');
+route::post('login','Auth\AuthController@login');
+route::get('logout','Auth\AuthController@logout');
+
+
 

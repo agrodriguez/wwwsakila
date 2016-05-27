@@ -8,7 +8,17 @@ class Country extends Model
 {
     //
     protected $table = 'country';
+
+    /**
+     * change default primary key
+     * @var string
+     */
     protected $primaryKey ='country_id';
+
+    /**
+     * set timestaps to false
+     * @var boolean
+     */
     public $timestamps = false;
 
     protected $fillable = ['country'];
@@ -17,6 +27,13 @@ class Country extends Model
     	'last_update'
     ];
 
+    /**
+     * override the set date attribute
+     * as per the example
+     * 
+     * @param $date
+     * 
+     */
     public function setLastUpdateAttribute($date)
     {
         $myDate = Carbon::createFromFormat('Y-m-d', $date);
@@ -27,6 +44,11 @@ class Country extends Model
         }       
     }
 
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function Cities(){
     	return $this->hasMany('App\City');
     }

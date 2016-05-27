@@ -8,7 +8,17 @@ class Inventory extends Model
 {
     //
     protected $table = 'inventory';
+
+    /**
+     * change default primary key
+     * @var string
+     */
     protected $primaryKey ='inventory_id';
+
+    /**
+     * set timestaps to false
+     * @var boolean
+     */
     public $timestamps = false;
 
     protected $fillable = [
@@ -20,6 +30,13 @@ class Inventory extends Model
     	'last_update'
     ];
 
+    /**
+     * override the set date attribute
+     * as per the example
+     * 
+     * @param $date
+     * 
+     */
     public function setLastUpdateAttribute($date)
     {
         $myDate = Carbon::createFromFormat('Y-m-d', $date);
@@ -30,15 +47,29 @@ class Inventory extends Model
         }       
     }
 
-
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function film(){
         return $this->belongsTo('App\Film');
     }
 
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function store(){
         return $this->belongsTo('App\Store');
     }
 
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function rentals(){
         return $this->hasMany('App\Rental');
     }

@@ -25,8 +25,8 @@ class StaffRequest extends Request
      */
     public function rules()
     {
-        //this method of validating is deprecated for versio laravel 5.2
-        
+        /** this method of validating is deprecated for versio laravel 5.2 */
+        /** check the method to update the validation rule accordingly */        
         
         if($this->method()=='PATCH'){
             $staff_id=$this->route()->parameters()['staff']['attributes']['staff_id'];

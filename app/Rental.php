@@ -9,7 +9,17 @@ class Rental extends Model
 {
     //
     protected $table = 'rental';
+
+    /**
+     * change default primary key
+     * @var string
+     */
     protected $primaryKey ='rental_id';
+
+    /**
+     * set timestaps to false
+     * @var boolean
+     */
     public $timestamps = false;
 
     protected $fillable = [
@@ -26,6 +36,13 @@ class Rental extends Model
     	'return_date'
     ];
 
+    /**
+     * override the set date attribute
+     * as per the example
+     * 
+     * @param $date
+     * 
+     */
     public function setLastUpdateAttribute($date)
     {
         $myDate = Carbon::createFromFormat('Y-m-d', $date);
@@ -36,6 +53,13 @@ class Rental extends Model
         }       
     }
 
+    /**
+     * override the set date attribute
+     * as per the example
+     * 
+     * @param $date
+     * 
+     */
     public function setRentalDateAttribute($date)
     {   	
     	$myDate = Carbon::createFromFormat('Y-m-d', $date);
@@ -46,6 +70,13 @@ class Rental extends Model
     	}
     }
 
+    /**
+     * override the set date attribute
+     * as per the example
+     * 
+     * @param $date
+     * 
+     */
     public function setReturnDateAttribute($date)
     {   	
     	$myDate = Carbon::createFromFormat('Y-m-d', $date);
@@ -57,20 +88,39 @@ class Rental extends Model
     }
 
 
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function customer(){
         return $this->belongsTo('App\Customer');
     }
 
 
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function inventory(){
         return $this->belongsTo('App\Inventory');
     }
 
-
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function staff(){
         return $this->belongsTo('App\Staff');
     }
 
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function payments(){
         return $this->hasMany('App\Payment');
     }

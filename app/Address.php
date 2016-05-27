@@ -7,9 +7,18 @@ use DB;
 
 class Address extends Model
 {
-    //
     protected $table = 'address';
+
+    /**
+     * change default primary key
+     * @var string
+     */
     protected $primaryKey ='address_id';
+
+    /**
+     * set timestaps to false
+     * @var boolean
+     */
     public $timestamps = false;
 
     protected $fillable = [
@@ -26,15 +35,20 @@ class Address extends Model
     	'last_update'
     ];
 
+    /**
+     * location is a point geofild to store the lat-long 
+     * @var array
+     */
     protected $geofields = ['location'];
 
 
     /**
-     * undocumented function
-     *
-     * @return void
-     * @author 
-     **/
+     * override the set date attribute
+     * as per the example
+     * 
+     * @param $date
+     * 
+     */
     public function setLastUpdateAttribute($date)
     {
         $myDate = Carbon::createFromFormat('Y-m-d', $date);
@@ -46,10 +60,10 @@ class Address extends Model
     }
 
     /**
-     * undocumented function
+     * override the set location attribute
      *
+     * @param POINT $value 
      * @return void
-     * @author 
      **/
     public function setLocationAttribute ($value)
     {
@@ -58,18 +72,21 @@ class Address extends Model
     }
 
     /**
+     *  get tke location value as string
      * 
-     **/
+     * @param  POINT $value
+     * @return string
+     */
     public function getLocationAttribute($value){
  
-        $loc =  substr($value, 6);
+        $loc = substr($value, 6);
         $loc = preg_replace('/[ ,]+/', ', ', $loc, 1);
  
         return substr($loc,0,-1);
     }
 
     /**
-     * undocumented function
+     * query database geofields
      *
      * @return void
      * @author 
@@ -84,15 +101,32 @@ class Address extends Model
         return parent::newQuery($excludeDeleted)->addSelect('*',DB::raw($raw));
     }
 
-
+    /**
+     * relation
+     *
+     * change default id field names
+     * @return relation
+     */
     public function city(){
         return $this->belongsTo('App\City');
     }
 
+    /**
+     * relation
+     *
+     * change default id field names
+     * @return relation
+     */
     public function customer(){
     	return $this->hasOne('App\Customer');
     }
 
+    /**
+     * relation
+     *
+     * change default id field names
+     * @return relation
+     */
     public function staff(){
         return $this->hasOne('App\Staff');
     }
@@ -100,8 +134,7 @@ class Address extends Model
     /**
      * get the city name
      *
-     * @return city
-     * @author 
+     * @return String
      **/
     public function getCity()
     {
@@ -111,8 +144,7 @@ class Address extends Model
     /**
      * get the country name
      *
-     * @return void
-     * @author 
+     * @return String
      **/
     public function getCountry ()
     {

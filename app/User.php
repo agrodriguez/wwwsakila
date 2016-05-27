@@ -1,5 +1,5 @@
 <?php
-
+/** CHANGE THE DEFAULT USER TABLE TO STAFF TABLE USING THIS MODEL AS USER LOGIN*/
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -8,7 +8,17 @@ class User extends Authenticatable
 {
 
     protected $table = 'staff';
+
+    /**
+     * change default primary key
+     * @var string
+     */
     protected $primaryKey ='staff_id';
+
+    /**
+     * set timestaps to false
+     * @var boolean
+     */
     public $timestamps = false;
 
     /**
@@ -31,6 +41,13 @@ class User extends Authenticatable
         'last_update'
     ];
 
+    /**
+     * override the set date attribute
+     * as per the example
+     * 
+     * @param $date
+     * 
+     */
     public function setLastUpdateAttribute($date)
     {
         $myDate = Carbon::createFromFormat('Y-m-d', $date);

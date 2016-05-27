@@ -11,7 +11,7 @@
 
 	{!! Form::close() !!}
 
-	{{-- {!! Form::model($staff,['action'=>['StaffsController@destroy',$staff->staff_id],'method'=>'DELETE','class'=>'form-horizontal']) !!}
+	{!! Form::model($staff,['action'=>['StaffsController@destroy',$staff->staff_id],'method'=>'DELETE','class'=>'form-horizontal']) !!}
 		
 		<div class="row">
 			<div class="form-group">
@@ -21,7 +21,7 @@
 			</div>
 		</div>
 
-	{!! Form::close() !!} --}}
+	{!! Form::close() !!}
 
 	@include('errors.list')
 

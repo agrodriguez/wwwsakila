@@ -12,7 +12,17 @@ class Staff extends Model
      * for use with the database AS IS
      */
     protected $table = 'staff';
+
+    /**
+     * change default primary key
+     * @var string
+     */
     protected $primaryKey ='staff_id';
+
+    /**
+     * set timestaps to false
+     * @var boolean
+     */
     public $timestamps = false;
 
     /**
@@ -39,9 +49,11 @@ class Staff extends Model
 
 
     /**
-     * set the last updated field
-     *
-     *  @var $date
+     * override the set date attribute
+     * as per the example
+     * 
+     * @param $date
+     * 
      */
     public function setLastUpdateAttribute($date)
     {
@@ -54,7 +66,7 @@ class Staff extends Model
     }
 
     /**
-     * undocumented function
+     * set the active attribute
      *
      * @return void
      * @author 
@@ -65,45 +77,55 @@ class Staff extends Model
     }
 
     /**
-     * define the address relationship
+     * relation
+     *
+     * @return relation
      */
     public function address(){
         return $this->belongsTo(Address::class);
     }
 
     /**
-     * define the store relationship
+     * relation
+     *
+     * @return relation
      */
     public function store(){
         return $this->belongsTo(Store::class);
     }
 
     /**
-     * define the rentals relationship
+     * relation
+     *
+     * @return relation
      */
     public function rentals(){
     	return $this->hasMany(Rental::class);
     }
 
     /**
-     * define the payments relationship
+     * relation
+     *
+     * @return relation
      */
     public function payments(){
     	return $this->hasMany(Payment::class);
     }
 
     /**
-     * define the manages relationship
+     * relation
+     *
+     * change default id field names
+     * @return relation
      */
     public function manages(){
         return $this->hasOne(Store::class,'manager_staff_id','staff_id');
     }
 
     /**
-     * undocumented function
+     * get the full name
      *
-     * @return void
-     * @author 
+     * @return string
      **/
     public function getFullName()
     {

@@ -8,7 +8,17 @@ class Category extends Model
 {
     //
     protected $table = 'category';
+
+    /**
+     * change default primary key
+     * @var string
+     */
     protected $primaryKey ='category_id';
+
+    /**
+     * set timestaps to false
+     * @var boolean
+     */
     public $timestamps = false;
 
     protected $fillable = ['name'];
@@ -17,6 +27,13 @@ class Category extends Model
     	'last_update'
     ];
 
+    /**
+     * override the set date attribute
+     * as per the example
+     * 
+     * @param $date
+     * 
+     */
     public function setLastUpdateAttribute($date)
     {
         $myDate = Carbon::createFromFormat('Y-m-d', $date);
@@ -27,6 +44,12 @@ class Category extends Model
         }       
     }
 
+    /**
+     * relation
+     *
+     * change default id field names
+     * @return relation
+     */
     public function films(){
     	return $this->belongsToMany('App\Film','film_category', 'film_id', 'category_id');
     }

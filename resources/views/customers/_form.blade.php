@@ -132,29 +132,7 @@
 		
 		@section('footer')
 		
-		<script type="text/javascript">
-		//loadMap({{ $loc }})
-
-		/*function loadMap(long, lat) {
-			if (GBrowserIsCompatible()) {
-				var map = new GMap2(document.getElementById("map_div"));
-				map.addControl(new GSmallMapControl());
-				map.addControl(new GMapTypeControl());
-				var center = new GLatLng(lat, long);
-				map.setCenter(center, 5);
-				geocoder = new GClientGeocoder();
-				var marker = new GMarker(center, {
-					draggable: true
-				});
-				map.addOverlay(marker);
-				document.getElementById("location").value = center.lat().toFixed(5)+', '+center.lng().toFixed(5);
-				GEvent.addListener(marker, "dragend", function() {
-					var point = marker.getPoint();
-					map.panTo(point);
-					document.getElementById("location").value = point.lat().toFixed(5)+', '+point.lat().toFixed(5);
-				});
-			}
-		}*/
+		<script type="text/javascript">		
 
 		var map;
 		function initMap() {

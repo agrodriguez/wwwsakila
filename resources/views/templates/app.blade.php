@@ -38,16 +38,14 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-
+            <li><a href="/about">       <span class="glyphicon glyphicon-info-sign"></span> About</a></li>
             <li><a href="/rentals">     <span class="glyphicon glyphicon-film"></span> Rentals</a></li>
-
             <li><a href="/films">       <span class="glyphicon glyphicon-film"></span> Films</a></li>
             <li><a href="/customers">   <span class="glyphicon glyphicon-user"></span> Customers</a></li>
             <li><a href="/staffs">      <span class="glyphicon glyphicon-user"></span> Staff</a></li>
-            <li><a href="/about">       <span class="glyphicon glyphicon-info-sign"></span> About</a></li>
-            <li><a href="/contact">     <span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
+           {{-- <li><a href="/contact">     <span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
 
-            {{-- <li class="dropdown">
+             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Database<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="/actors">Actors</a></li>
@@ -65,7 +63,7 @@
                 <!-- Authentication Links -->
                 @if (Auth::guest())
                     <li><a href="{{ url('/login') }}">     <span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    {{-- <li><a href="{{ url('/register') }}">  <span class="glyphicon glyphicon-list-alt"></span> Register</a></li>--}}
+                    {{-- <li><a href="{{ url('/register') }}">  <span class="glyphicon glyphicon-list-alt"></span> Register</a></li> --}}
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

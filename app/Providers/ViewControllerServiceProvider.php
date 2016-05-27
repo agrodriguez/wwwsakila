@@ -26,6 +26,9 @@ class ViewControllerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        /**
+         * compose view for films form passing lists
+         */
         view()->composer('films._form', function($view)
         {
             $categories=Category::lists('name','category_id')->all();
@@ -52,6 +55,10 @@ class ViewControllerServiceProvider extends ServiceProvider
             $view->with(['categories'=>$categories,'ratings'=>$ratings,'specialFeatures'=>$specialFeatures,'actors'=>$actors,'languages'=>$languages]);
         });
 
+
+        /**
+         * compose view for staffs and customers form passing lists
+         */
         view()->composer(['staffs._form','customers._form'], function($view)
         {
             $countries=Country::lists('country','country_id')->all();
@@ -61,6 +68,9 @@ class ViewControllerServiceProvider extends ServiceProvider
             $view->with(['countries'=>$countries,'stores'=>$stores]);
         });
 
+        /**
+         * compose view for inventories passing lists
+         */
         view()->composer('inventories.index', function($view)
         {
             //$countries=Country::lists('country','country_id')->all();            

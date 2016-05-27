@@ -9,7 +9,17 @@ class Film extends Model
 {
     //
     protected $table = 'film';
+
+    /**
+     * change default primary key
+     * @var string
+     */
     protected $primaryKey ='film_id';
+
+    /**
+     * set timestaps to false
+     * @var boolean
+     */
     public $timestamps = false;
 
     protected $fillable = [
@@ -45,39 +55,88 @@ class Film extends Model
         }       
     }
 
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function inventories(){
         return $this->hasMany('App\Inventory');
     }
 
+    /**
+     * relation
+     *
+     * change default id field names
+     * @return relation
+     */
     public function categories(){
     	return $this->belongsToMany('App\Category','film_category', 'film_id', 'category_id');
     }
 
+    /**
+     * relation
+     *
+     * change default id field names
+     * @return relation
+     */
     public function actors(){
         return $this->belongsToMany('App\Actor','film_actor', 'film_id', 'actor_id');
     }
 
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function language(){
         return $this->belongsTo('App\Language');
     }
 
+    /**
+     * relation
+     *
+     * change default id field names
+     * @return relation
+     */
     public function originalLanguage(){
         return $this->belongsTo('App\Language','original_language_id','language_id');
     }
 
+    
+    /**
+     * get the relation in list form
+     * 
+     * @return array
+     */
     public function getCategoryListAttribute(){
         return $this->categories->lists('category_id')->all();
     }
 
+    /**
+     * get the relation in list form
+     * 
+     * @return array
+     */
     public function getActorListAttribute(){
         return $this->actors->lists('actor_id')->all();
     }
 
+    /**
+     * set the set field as implided array
+     * 
+     * @return void
+     */
     public function setSpecialFeaturesAttribute($array)
     {
         $this->attributes['special_features'] =  implode(',', $array); 
     }
 
+    /**
+     * get the relation in list form as exploded array
+     * 
+     * @return array
+     */
     public function getSpecialFeaturesAttribute(){
         return explode(',', $this->attributes['special_features']) ;
     }

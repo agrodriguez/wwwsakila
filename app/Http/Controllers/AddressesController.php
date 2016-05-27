@@ -1,5 +1,7 @@
 <?php
 
+/** THIS CONTROLLER IS NOT CURRENTLY USED */
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddressRequest;
@@ -28,7 +30,9 @@ class AddressesController extends Controller
     }
 
     /**
+     * return default view
      * 
+     * @return view
      */
     public function index()
     {
@@ -38,7 +42,10 @@ class AddressesController extends Controller
     }
 
     /**
+     * show address detail
      * 
+     * @param  App\Address $address
+     * @return view
      */
     public function show(Address $address)
     {
@@ -46,11 +53,11 @@ class AddressesController extends Controller
     }
 
     /**
-     * undocumented function
+     * create a new address
      *
-     * @return void
-     * @author 
-     **/
+     * country list passed on to the form as well as the default city
+     * @return view
+     */
     public function create()
     {
         $countries=Country::lists('country','country_id')->all();
@@ -59,35 +66,37 @@ class AddressesController extends Controller
     }
 
     /**
-     * undocumented function
-     *
-     * @return addresses
-     * @author 
-     **/
+     * save the new address
+     * 
+     * @param  Requests/AddressRequest $request
+     * @return redirect
+     */
     public function store (AddressRequest $request)
     {
         $address = Address::create($request->except(['country_id']));
         return redirect('addresses');
     }
 
-
     /**
+     * edit the address
      * 
+     * @param  App\Address $address
+     * @return view
      */
     public function edit(Address $address)
     {
-        
         $countries=Country::lists('country','country_id')->all();
         $city=[$address->city_id=>$address->city->city];
         return view('addresses.edit', compact('address','countries','city'));
     }
 
     /**
-     * undocumented function
-     *
-     * @return void
-     * @author 
-     **/
+     * update the address
+     * 
+     * @param  App/Address $address
+     * @param  Requests/AddressRequest $request
+     * @return redirect
+     */
     public function update(Address $address, AddressRequest $request)
     {
         $address->update($request->except(['country_id']));

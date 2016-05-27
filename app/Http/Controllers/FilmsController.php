@@ -27,7 +27,7 @@ class FilmsController extends Controller
     /**
      * index page for films
      *
-     * @return view films.index
+     * @return view 
      */
     public function index()
     {
@@ -38,13 +38,12 @@ class FilmsController extends Controller
     /**
      * show a specific film
      *
-     * parameter Film $film through implicit binding
-     * @return view films.show
+     * @param Film $film through implicit binding
+     * @return view 
      */
     public function show(Film $film)
     {
         $inventory_list = $this->getInventory($film, \Auth::user()->store_id);
-
         return view('films.show', compact('film','inventory_list'));
     }
 
@@ -61,23 +60,20 @@ class FilmsController extends Controller
     /**
      * store the new film in the database
      *
-     * parameter FilmRequest $request 
+     * @param FilmRequest $request 
      * @return view films.index
      */
     public function store(FilmRequest $request)
     {
-        
         $film = Film::create($request->all());
-
-        $this->syncFields($film, $request->input('actor_list'),$request->input('category_list'));
-
+        $this->syncFields($film, $request);
         return redirect('films');
     }
 
     /**
      * edit a film
      *
-     * parameter Film $film through implicit binding
+     * @param Film $film through implicit binding
      * @return view films.edit
      */
     public function edit(Film $film)
@@ -89,24 +85,21 @@ class FilmsController extends Controller
     /**
      * update the edited film
      *
-     * parameter Film $film through implicit binding
-     * parameter FilmRequest $request 
-     * @return view films.index
+     * @param Film $film through implicit binding
+     * @param FilmRequest $request 
+     * @return view 
      */
     public function update(Film $film, FilmRequest $request)
     {
         $film->update($request->all());
-
-        $this->syncFields($film, $request->input('actor_list'), $request->input('category_list'));
-
+        $this->syncFields($film, $request);
         return redirect('films');
     }
 
     /**
-     * undocumented function
+     * delete the film
      *
-     * @return void
-     * @author 
+     * @return redirect
      **/
     public function destroy(Film $film)
     {
@@ -117,24 +110,32 @@ class FilmsController extends Controller
     /**
      * update the edited film
      *
-     * parameter Film $film 
-     * parameter $actors
-     * parameter $categories
-     * @return Film $film
+     * @param Film $film 
+     * @param $actors
+     * @param $categories
+     * @return void
      */
-    private function syncFields(Film $film, array $actors, array $categories){
+    private function syncFields(Film $film, FilmRequest $request)
+    {
 
-        $film->categories()->sync($categories);
+        if (!$request->has('actor_list')) {
+            array_add($request,'actor_list',[]);
+        }
 
-        $film->actors()->sync($actors);
+         if (!$request->has('category_list')) {
+            array_add($request,'category_list',[]);
+        }
 
+        $film->categories()->sync($request->input('category_list'));
+        $film->actors()->sync($request->input('actor_list'));
     }
 
     /**
      * get inventory for the films on the store
      *
+     * @param Film $film 
+     * @param $store_id 
      * @return inventory list
-     * @author 
      **/
     private function getInventory(Film $film, $store_id)
     {

@@ -8,7 +8,17 @@ class Payment extends Model
 {
     //
     protected $table = 'payment';
+
+    /**
+     * change default primary key
+     * @var string
+     */
     protected $primaryKey ='payment_id';
+
+    /**
+     * set timestaps to false
+     * @var boolean
+     */
     public $timestamps = false;
 
     protected $dates = [
@@ -23,6 +33,13 @@ class Payment extends Model
     	'ammount'    	
     ];
 
+    /**
+     * override the set date attribute
+     * as per the example
+     * 
+     * @param $date
+     * 
+     */
     public function setLastUpdateAttribute($date)
     {
         $myDate = Carbon::createFromFormat('Y-m-d', $date);
@@ -33,6 +50,13 @@ class Payment extends Model
         }       
     }
 
+    /**
+     * override the set date attribute
+     * as per the example
+     * 
+     * @param $date
+     * 
+     */
     public function setPaymentDateAttribute($date)
     {
     	$myDate = Carbon::createFromFormat('Y-m-d', $date);
@@ -43,15 +67,29 @@ class Payment extends Model
     	}    	
     }
 
-
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function customer(){
         return $this->belongsTo('App\Customer');
     }
 
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function rental(){
         return $this->belongsTo('App\Rental');
     }
 
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function staff(){
         return $this->belongsTo('App\Staff');
     }

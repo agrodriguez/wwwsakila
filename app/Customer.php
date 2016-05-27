@@ -8,7 +8,17 @@ class Customer extends Model
 {
     //
     protected $table = 'customer';
+
+    /**
+     * change default primary key
+     * @var string
+     */
     protected $primaryKey ='customer_id';
+
+    /**
+     * set timestaps to false
+     * @var boolean
+     */
     public $timestamps = false;
 
     protected $fillable = [
@@ -25,6 +35,13 @@ class Customer extends Model
         'create_date'
     ];
 
+    /**
+     * override the set date attribute
+     * as per the example
+     * 
+     * @param $date
+     * 
+     */
     public function setLastUpdateAttribute($date)
     {
         $myDate = Carbon::createFromFormat('Y-m-d', $date);
@@ -35,6 +52,13 @@ class Customer extends Model
         }       
     }
 
+    /**
+     * override the set date attribute
+     * as per the example
+     * 
+     * @param $date
+     * 
+     */
     public function setCreateDateAttribute($date)
     {
     	$myDate = Carbon::createFromFormat('Y-m-d', $date);
@@ -45,46 +69,69 @@ class Customer extends Model
     	}
     }
 
+    /**
+     * set the active attribute
+     *
+     * @return void
+     */
     public function setActiveAttribute ($value)
     {
         $this->attributes['active'] = $value? 1 : 0;
     }
 
+    /**
+     * relation
+     *
+     * change default id field names
+     * @return relation
+     */
     public function address(){
         return $this->belongsTo(Address::class);
     }
 
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function store(){
         return $this->belongsTo('App\Store');
     }
 
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function payments(){
     	return $this->hasMany('App\Payment');
     }
 
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function rentals(){
     	return $this->hasMany('App\Rental');
     }
 
 
     /**
-     * undocumented function
+     * get the balance for the customer
      *
-     * @return void
-     * @author 
+     * @return decimal
      **/    
      public function getBalance(){
-        $queryString='select get_customer_balance('.$this->customer_id.',NOW()) as ammount;';
-        
+        $queryString='select get_customer_balance('.$this->customer_id.',NOW()) as ammount;';        
         $ammount=\DB::select($queryString);
         return $ammount[0]->ammount;
     }
 
     /**
-     * undocumented function
+     * get the full name of the customer
      *
-     * @return void
-     * @author 
+     * @return string
      **/
     public function getFullName()
     {

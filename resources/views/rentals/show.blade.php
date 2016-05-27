@@ -9,7 +9,11 @@
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">
 
-				
+				<ul class="list-group">
+					
+					<li class="list-group-item"><b>Customer :</b> {{ $rental->customer->getFullName() }}</li>
+					<li class="list-group-item"><b>Film :</b> {{ $rental->inventory->film->title }}</li>
+				</ul>
 				
 
 				{!! Form::hidden('store_id',Auth::user()->store_id ,['id'=>'store_id']) !!}
@@ -23,22 +27,18 @@
 		<hr />
 		<div class="row">
 			<div class="form-group">
+				@if(!$rental->return_date)
 				<div class="col-sm-offset-4 col-sm-4">
 					{!! Form::submit('Return Rental',['class'=>'btn btn-primary form-control']) !!}			
 				</div>
+				@else
+				<div class="col-sm-offset-4 col-sm-4">
+					<h3><a href="/rentals">This film was already returned</a></h3>
+				</div>
+				@endif
+				
 			</div>
 		</div>
-
-	<div class="row">
-		<div class="col-md-4 col-md-offset-4">
-			<ul class="list-group">
-				<li class="list-group-item">{{ $rental->rental_id }}</li>
-				<li class="list-group-item">{{ $rental->customer_id }}</li>
-				<li class="list-group-item">{{ $rental->customer->getFullName() }}</li>
-			</ul>
-		</div>
-	</div>
-	
 
 	
 @stop

@@ -29,7 +29,9 @@ class CustomersController extends Controller
     }
 
     /**
+     * default view for customers
      * 
+     * @return view
      */
     public function index()
     {
@@ -38,7 +40,10 @@ class CustomersController extends Controller
     }
 
     /**
+     * show customere detail
      * 
+     * @param  App\Customer $customer
+     * @return view
      */
     public function show(Customer $customer){
         //eager load address city and country
@@ -47,67 +52,65 @@ class CustomersController extends Controller
     }
 
     /**
-     * undocumented function
-     *
-     * @return void
-     * @author 
-     **/
+     * create new customer
+     * 
+     * @return view
+     */
     public function create()
     {
         //set the city as default select value is null on create
         $city=[];
-        //use default store staff store
         return view('customers.create',compact('city'));
     }
 
     /**
-     * undocumented function
-     *
-     * @return customers
-     * @author 
-     **/
+     * save the new customer
+     * 
+     * @param  Requests\CustomerRequest $request
+     * @return redirect
+     */
     public function store (CustomerRequest $request)
     {
-        
-
         $this->storeCustomer($request);
         return redirect('customers');
     }
 
     /**
+     * edit the customer
      * 
+     * @param  App\Customer $customer
+     * @return view
      */
     public function edit(Customer $customer)
     {
-        //set the city as default select value
+        /** set the city as default select value */        
         $city=[$customer->address->city_id=>$customer->address->city->city];
         return view('customers.edit', compact('customer','city'));
     }
 
     /**
-     * undocumented function
-     *
-     * @return void
-     * @author 
-     **/
+     * update the customer
+     * 
+     * @param  App\Customer $customer
+     * @param  App\CustomerRequest $request
+     * @return redirect
+     */
     public function update(Customer $customer, CustomerRequest $request)
-    {
-              
+    { 
         $this->updateCustomer($customer, $request);
-
         return redirect('customers');
     }
 
     /**
-     * undocumented function
-     *
+     * save the address and the customer to each model
+     * 
+     * @param  App\CustomerRequest $request
      * @return void
-     * @author 
-     **/
+     */
     private function storeCustomer(CustomerRequest $request)
     {
         // set the address values and create        
-        $address_array = array_add(array_add($request->address, 'city_id', $request->city_id ),'location', $request->location);        
+        $address_array = array_add(array_add($request->address, 'city_id', $request->city_id ),'location', $request->location);
         $address = Address::create($address_array);
 
         // set the customer values        
@@ -116,11 +119,12 @@ class CustomersController extends Controller
     }
 
     /**
-     * undocumented function
-     *
+     * update the address and customer model
+     * 
+     * @param  Customer $customer
+     * @param  CustomerRequest $request
      * @return void
-     * @author 
-     **/
+     */
     private function updateCustomer(Customer $customer, CustomerRequest $request)
     {
         $address_array = array_add(array_add($request->address, 'city_id', $request->city_id ),'location', $request->location);

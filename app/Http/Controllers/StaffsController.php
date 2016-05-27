@@ -27,7 +27,9 @@ class StaffsController extends Controller
     }
 
     /**
+     * show index
      * 
+     * @return view
      */
     public function index()
     {
@@ -36,15 +38,21 @@ class StaffsController extends Controller
     }
 
     /**
+     * show staff detail
      * 
+     * @param  Staff $staff
+     * @return view
      */
     public function show(Staff $staff){
         $staff->load('address.city.country','store.address.city.country')->get();
         return view('staffs.show',compact('staff'));
     }
 
+    
     /**
+     * create new staff
      * 
+     * @return view
      */
     public function create(){
         $city=[];
@@ -52,38 +60,22 @@ class StaffsController extends Controller
     }
 
     /**
+     * save new staff
      * 
+     * @param  StaffRequest $request
+     * @return redirect
      */
     public function store(StaffRequest $request){ 
 
-         // set the address values and create        
-        $address_array = array_add(array_add($request->address, 'city_id', $request->city_id ),'location', $request->location);        
-        $address = Address::create($address_array);
-
-       
-
-        // set the customer values        
-        $staff_array = array_add(array_add($request->except('address','city_id','country_id','location'), 'address_id', $address->address_id),'active',$request->has('active'));
-        $staff_array['password'] = bcrypt($request['password']);
-        $staff =Staff::create($staff_array);
-
-        $tmpName='images/uploads/upload'.time().'.png';
-
-
-
-        if (!is_null($request->file('picture'))){
-             $img = Image::make($request->file('picture'))->fit(121, 117)->save($tmpName);
-             $staff->picture = $img->encode('png');
-        }
-
-        $staff->save();
-
-        //$staff = Staff::create($request->all());
+        $this->storeStaff($request);
         return redirect('staffs');
     }
 
     /**
+     * edit the staff 
      * 
+     * @param  Staff $staff
+     * @return view
      */
     public function edit(Staff $staff){
         $city=[$staff->address->city_id=>$staff->address->city->city];
@@ -91,30 +83,44 @@ class StaffsController extends Controller
     }
 
     /**
+     * update the staff
      * 
+     * @param  Staff $staff
+     * @param  StaffRequest $request
+     * @return redirect
      */
     public function update(Staff $staff, StaffRequest $request){
+        $this->updateStaff($staff, $request);
+        return redirect('staffs');
+    }
 
-        //dd($request->file('picture'));
+    /**
+     * delete the staff
+     * 
+     * @param  Staff $staff
+     * @return redirect
+     */
+    public function destroy(Staff $staff)
+    {
+        $staff->delete();
+        return redirect('staffs');
+    }
 
-        //$staff->active = $request->has('active');
-
-        //$tmpName='C:\inetpub\wwwsakila\public\Jqueryupload\uploads\Desktop.png';
-
-
-
+    /**
+     * update the staff address image and password
+     *
+     * @param  Staff $staff
+     * @param  StaffRequest $request
+     * @return void
+     **/
+    private function updateStaff (Staff $staff, StaffRequest $request)
+    {
         $tmpName='images/uploads/upload'.time().'.png';
 
-        /*$img = Image::make($tmpName)->resize(121, null,function ($constraint) {
-            $constraint->aspectRatio();
-        });*/
-
-        //$img = Image::make(Input::file('picture'))->fit(121, 117)->save($tmpName);
         if (!is_null($request->file('picture'))){
              $img = Image::make($request->file('picture'))->fit(121, 117)->save($tmpName);
              $staff->picture = $img->encode('png');
         }
-
 
         $address_array = array_add(array_add($request->address, 'city_id', $request->city_id ),'location', $request->location);
         $staff->address->update($address_array);
@@ -127,21 +133,33 @@ class StaffsController extends Controller
         else{
             $staff->update($request->except('address','city_id','country_id','location','picture','password'));   
         }
-        //$staff->update($request->except(['picture','password']));
-
-        return redirect('staffs');
     }
 
     /**
-     * undocumented function
+     * store the staff address image and info
      *
+     * @param  StaffRequest $request
      * @return void
-     * @author 
      **/
-    public function destroy(Staff $staff)
+    private function storeStaff (StaffRequest $request)
     {
-        $staff->delete();
-        return redirect('staffs');
+        /** set the address values and create */
+        $address_array = array_add(array_add($request->address, 'city_id', $request->city_id ),'location', $request->location);
+        $address = Address::create($address_array);
+        
+        /** set the customer values */
+        $staff_array = array_add(array_add($request->except('address','city_id','country_id','location'), 'address_id', $address->address_id),'active',$request->has('active'));
+        $staff_array['password'] = bcrypt($request['password']);
+        $staff =Staff::create($staff_array);
+
+        $tmpName='images/uploads/upload'.time().'.png';
+
+        if (!is_null($request->file('picture'))){
+             $img = Image::make($request->file('picture'))->fit(121, 117)->save($tmpName);
+             $staff->picture = $img->encode('png');
+        }
+        $staff->save();
+        //$staff = Staff::create($request->all());
     }
 
 }

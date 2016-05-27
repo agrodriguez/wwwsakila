@@ -6,9 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Actor extends Model
 {
-    //
+    
     protected $table = 'actor';
+
+    /**
+     * change default primary key
+     * @var string
+     */
     protected $primaryKey ='actor_id';
+
+    /**
+     * set timestaps to false
+     * @var boolean
+     */
     public $timestamps = false;
 
     protected $fillable = [
@@ -20,6 +30,14 @@ class Actor extends Model
     	'last_update'
     ];
 
+
+    /**
+     * override the set date attribute
+     * as per the example
+     * 
+     * @param $date
+     * 
+     */
     public function setLastUpdateAttribute($date)
     {
         $myDate = Carbon::createFromFormat('Y-m-d', $date);
@@ -30,6 +48,12 @@ class Actor extends Model
         }       
     }
 
+    /**
+     * relation
+     *
+     * change default id field names
+     * @return relation
+     */
     public function films(){
     	return $this->belongsToMany('App\Film','film_actor', 'actor_id', 'film_id');
     }

@@ -1,11 +1,14 @@
 @extends('templates.app')
 @section('content')
-<div class="title">Sakila</div>
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
 
-<h1>Contact</h1>
+		<h1>Contact</h1>
 
-<p>
-	Contact
-</p>
+		<p>
+			Contact
+		</p>
+	</div>
+</div>
 
 @stop

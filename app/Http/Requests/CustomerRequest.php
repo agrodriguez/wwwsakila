@@ -25,9 +25,8 @@ class CustomerRequest extends Request
      */
     public function rules()
     {
-        //this method of validating is deprecated for versio laravel 5.2
-        //dd($this->route()->parameters()['customer']['attributes']['customer_id']);
-        
+
+        /** check the method to update the validation rule accordingly */        
         if($this->method()=='PATCH'){
             $customer_id=$this->route()->parameters()['customer']['attributes']['customer_id'];
             $email_rule='required|email|max:255|unique:customer,email,'.$customer_id.',customer_id';

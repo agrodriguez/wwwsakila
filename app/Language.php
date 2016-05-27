@@ -8,7 +8,17 @@ class Language extends Model
 {
     //
     protected $table = 'language';
+
+    /**
+     * change default primary key
+     * @var string
+     */
     protected $primaryKey ='language_id';
+
+    /**
+     * set timestaps to false
+     * @var boolean
+     */
     public $timestamps = false;
 
     protected $fillable = ['name'];
@@ -17,6 +27,13 @@ class Language extends Model
     	'last_update'
     ];
 
+    /**
+     * override the set date attribute
+     * as per the example
+     * 
+     * @param $date
+     * 
+     */
     public function setLastUpdateAttribute($date)
     {
         $myDate = Carbon::createFromFormat('Y-m-d', $date);
@@ -27,6 +44,11 @@ class Language extends Model
         }       
     }
 
+    /**
+     * relation
+     *
+     * @return relation
+     */
     public function films(){
     	return $this->hasMany('App\Film');
     }

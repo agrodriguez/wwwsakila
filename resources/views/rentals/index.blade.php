@@ -74,6 +74,10 @@
 						}
 					}				
 				});
+
+				$("#film_id").on("change", function(e){ 
+					$("#inventory_id").val(null).trigger("change");
+				});
 			});
 			
 		</script>

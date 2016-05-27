@@ -23,7 +23,9 @@ class ActorsController extends Controller
     }
 
     /**
+     * return default view for the actor
      * 
+     * @return view
      */
     public function index()
     {
@@ -31,8 +33,11 @@ class ActorsController extends Controller
     	return view('actors.index', compact('actors'));
     }
 
-    /**
+     /**
+     * show detail view for the actor
      * 
+     * @param  App\Actor $actor
+     * @return view
      */
     public function show(Actor $actor)
     {
